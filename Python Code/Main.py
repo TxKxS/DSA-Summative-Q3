@@ -4,10 +4,44 @@ def main():
 
     greedyAlgorithm()
 
+    nonGreedyAlgo()
+
+
+
+
+def nonGreedyAlgo():
+
+    print("\nNon greedy algorithm")
+
+    filePath = "../Q3_sequence_main.csv"
+    
+    tempList = readfile(filePath)
+
+    sponsorsList = createTable(tempList)
+
+
+    dp = [0] * len(sponsorsList)
+
+    #Bases Cases
+    dp[0] = sponsorsList[0]
+    dp[1] = sponsorsList[1]
+
+    for i in range(2,len(sponsorsList)):
+        dp[i] = max(dp[i-2] + sponsorsList[i] , dp[i -1] )
+
+    print("Max is " , dp[11])
+    print(dp)
+    
+
+
+
+
+
+
     
 def greedyAlgorithm():
 
-    #print("Main program")
+    print("\nGreedy Algorithm")
 
     filePath = "../Q3_sequence_main.csv"
 
@@ -72,6 +106,22 @@ def readfile(fileName):
     del rawList[0]
 
     return rawList
+
+def dynamicPrograming():
+
+    filePath = "../Q3_sequence_main.csv"
+    
+    tempList = readfile(filePath)
+    
+    
+    sponsorsList = createTable(tempList)
+    
+    total = 0
+    
+    tempList = sponsorsList.copy()
+
+
+     
 
         
 if __name__ == "__main__":
