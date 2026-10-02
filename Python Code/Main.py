@@ -2,18 +2,25 @@ import csv
 
 def main():
 
-    greedyAlgorithm()
+    filePath = "../Q3_sequence_main.csv"
 
-    nonGreedyAlgo()
+    greedyAlgorithm(filePath)
+
+    nonGreedyAlgo(filePath)
+
+    filePath = "../Q3_sequence_selfcheck.csv"
+    
+    greedyAlgorithm(filePath)
+    
+    nonGreedyAlgo(filePath)
 
 
 
-
-def nonGreedyAlgo():
+def nonGreedyAlgo(filePath):
 
     print("\nNon greedy algorithm")
 
-    filePath = "../Q3_sequence_main.csv"
+    
     
     tempList = readfile(filePath)
 
@@ -24,33 +31,28 @@ def nonGreedyAlgo():
 
     #Bases Cases
     dp[0] = sponsorsList[0]
-    dp[1] = sponsorsList[1]
+    dp[1] = max(sponsorsList[1],sponsorsList[0])
 
     for i in range(2,len(sponsorsList)):
         dp[i] = max(dp[i-2] + sponsorsList[i] , dp[i -1] )
 
-    print("Max is " , dp[11])
+    print("Max is " , dp[len(dp) -1])
     print(dp)
-    
-
-
 
 
 
 
     
-def greedyAlgorithm():
+def greedyAlgorithm(filePath):
 
     print("\nGreedy Algorithm")
 
-    filePath = "../Q3_sequence_main.csv"
 
     tempList = readfile(filePath)
 
     #print(DataList)
 
     sponsorsList = createTable(tempList)
-
 
     total = 0
 
@@ -64,13 +66,13 @@ def greedyAlgorithm():
 
         total += max_value
 
-        if max_index + 1 <= len(tempList): 
-            del tempList[max_index +1 ]
+        if (max_index + 1) < len(tempList): #index is always 1 less than length
+            del tempList[max_index +1]
 
         del tempList[max_index]
 
         if max_index - 1 >= 0 :
-            del tempList[max_index -1]
+            del tempList[max_index - 1]
 
     print("Total is ", total)
 
@@ -82,9 +84,6 @@ def createTable(tempList):
 
     for x in tempList:
         tableList.append(int(x[2]))
-
-
-    # print(tableList)
 
     return tableList
 
